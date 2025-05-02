@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [
     react(),
     clean({
-      targetFiles: ["../backend/client"],
+      targetFiles: ["../backend/public"],
     }),
   ],
   build: {
-    outDir: "../backend/client",
+    outDir: "../backend/public",
     watch: {
       exclude: "node_modules/**",
     },

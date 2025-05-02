@@ -1,28 +1,20 @@
-import StatusCodes from "http-status-codes";
+import { StatusCodes, getReasonPhrase } from "http-status-codes";
+import { buildResponse } from "../utility/index.js";
 
-const errorHandlerMiddleware = (err, req, res, next) => {
-  let customError = {
-    statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-    msg: err.message || 'Something went wrong try again later',
-  };
-  if (err.name === 'ValidationError') {
-    customError.msg = Object.values(err.errors)
-      .map((item) => item.message)
-      .join(',');
-    customError.statusCode = 400;
-  }
-  if (err.code && err.code === 11000) {
-    customError.msg = `Duplicate value entered for ${Object.keys(
-      err.keyValue
-    )} field, please choose another value`;
-    customError.statusCode = 400;
-  }
-  if (err.name === 'CastError') {
-    customError.msg = `No item found with id : ${err.value}`;
-    customError.statusCode = 404;
-  }
+const errorHandlerMiddleware = (error, req, res, next) => {
+  const statusCode = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
+  const message = error.message || getReasonPhrase(statusCode);
+  const errorResponse = buildResponse({
+    data: {
+      code: statusCode,
+    },
+    success: false,
+    message,
+    error
+  });
+  console.log(errorResponse);
 
-  return res.status(customError.statusCode).json({ msg: customError.msg });
+  return res.status(statusCode).json(errorResponse);
 };
 
-export default errorHandlerMiddleware
+export default errorHandlerMiddleware;

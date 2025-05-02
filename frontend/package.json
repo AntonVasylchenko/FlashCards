@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "watch": "vite build --watch"
+    "watch": "vite build --watch --emptyOutDir"
   },
   "dependencies": {
     "@types/node": "^22.14.1",

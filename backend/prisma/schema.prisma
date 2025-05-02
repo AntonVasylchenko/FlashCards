@@ -14,4 +14,34 @@ model User {
   lastName     String?
   userName     String?
   languageCode String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cards     Card[]
+  decks     Deck[]
+}
+
+model Deck {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  userId      String  @db.ObjectId
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cards Card[]
+}
+
+model Card {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  question String
+  answer   String
+  hint     String?
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String  @db.ObjectId
+  decks    Deck    @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  deckId   String  @db.ObjectId
 }
