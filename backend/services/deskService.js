@@ -1,3 +1,4 @@
+import customError from "../errors/index.js";
 import { deskModel } from "../models/index.js"
 import { buildResponse } from "../utility/index.js";
 const { getAll, getById, createDesk, updateDesk, deleteDesk } = deskModel;
@@ -14,6 +15,9 @@ async function getAllDesks(userId) {
 
 }
 async function getDeskById(deskId) {
+    if (!deskId) {
+        throw new customError.BadRequestError(`Missing required parameter: 'deskId'. Please provide a valid desk ID to retrieve the desk.`);
+    }
     const desk = await getById(deskId);
     return buildResponse({
         data: desk,
@@ -23,6 +27,9 @@ async function getDeskById(deskId) {
     });
 }
 async function createNewDesk(userId, desk) {
+    if (!desk.title) {
+        throw new customError.BadRequestError("Missing required field: 'title'. Please provide a title for the desk.");
+    }
     const newDesk = await createDesk(userId, desk);
     return buildResponse({
         data: newDesk,
@@ -32,6 +39,12 @@ async function createNewDesk(userId, desk) {
     });
 }
 async function updateExistingDesk(deskId, desk) {
+    if (!deskId) {
+        throw new customError.BadRequestError("Missing required parameter: 'deskId'. Please provide a valid desk ID to retrieve the desk.");
+    }
+    if (desk.title == "") {
+        throw new customError.BadRequestError("Desk title cannot be empty.");
+    }
     const updatedDesk = await updateDesk(deskId, desk);
     return buildResponse({
         data: updatedDesk,
@@ -41,6 +54,9 @@ async function updateExistingDesk(deskId, desk) {
     });
 }
 async function deleteExistingDesk(deskId) {
+    if (!deskId) {
+        throw new customError.BadRequestError(`Missing required parameter: 'deskId'. Please provide a valid desk ID to retrieve the desk.`);
+    }
     const deletedDesk = await deleteDesk(deskId);
     return buildResponse({
         data: deletedDesk,

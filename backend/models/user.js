@@ -5,6 +5,11 @@ async function checkUser(id) {
         where: {
             telegramId: id,
         },
+        include: {
+            _count: {
+                select: { cards: true, decks: true }
+            }
+        }
     });
 }
 

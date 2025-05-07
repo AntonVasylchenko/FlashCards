@@ -10,7 +10,7 @@ const errorHandlerMiddleware = (error, req, res, next) => {
     },
     success: false,
     message,
-    error
+    error: error.message || "Error does not any message"
   });
   console.log(errorResponse);
 

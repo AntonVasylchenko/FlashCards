@@ -13,6 +13,11 @@ async function getById(deskId) {
         where: {
             id: deskId,
         },
+        include: {
+            _count: {
+                select: { cards: true },
+            },
+        }
     });
 }
 

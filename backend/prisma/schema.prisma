@@ -40,8 +40,18 @@ model Card {
   question String
   answer   String
   hint     String?
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String  @db.ObjectId
-  decks    Deck    @relation(fields: [deckId], references: [id], onDelete: Cascade)
-  deckId   String  @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+  decks  Deck   @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  deskId String @db.ObjectId
+
+
+  interval    Int      @default(1)
+  easeFactor  Float    @default(2.5)
+  repetitions Int      @default(0)
+  dueDate     DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

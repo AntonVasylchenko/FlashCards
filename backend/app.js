@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 import { notFoundMiddleware, errorHandlerMiddleware } from "./middleware/index.js";
 import appConfig from "./src/config.js";
 import launchTelegramBot from "./src/telegram.js";
-import { userRoutes, deskRoutes } from "./routes/index.js";
+import { userRoutes, deskRoutes, cardRoutes } from "./routes/index.js";
 
 const app = express();
 const PORT = appConfig.port
@@ -21,6 +21,7 @@ app.use(express.json());
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/desk", deskRoutes);
+app.use("/api/v1/card", cardRoutes);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, './public', 'index.html'));

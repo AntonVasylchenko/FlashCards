@@ -11,6 +11,7 @@ export const authenticateUser = (req, res, next) => {
   try {
     const token = auth.split(' ')[1];
     const decoded = isTokenValid(token);
+
     req.user = decoded;
     next();
   } catch (err) {
