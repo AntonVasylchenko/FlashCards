@@ -1,0 +1,39 @@
+{
+  "create": "Створити колоду",
+  "desk": "Колода",
+  "view": "Мої колоди",
+  "about": "Про автора",
+  "settings": "Налаштування",
+  "404": "404",
+
+  "home_description": "Флешкарти для вивчення мов у Telegram",
+
+  "create_desk_name": "Назва колоди",
+  "create_desk_describe": "Опис колоди",
+  "create_desk_create": "Cтворити",
+  "create_desk_creating": "Cтворення",
+  "create_desk_view": "Перегляд",
+  "create_desk_success": "Колода успішно створено",
+  "create_desk_error": "Будь ласка, вкажіть назву колоди",
+
+  "list_desk_empty": "Немає колод в наявності",
+  "list_desk_create": "Cтворити нову колоду",
+  "list_desk_edit": "Редагування",
+  "list_desk_remove": "Видалити",
+  "list_desk_add_word": "Додати слово",
+  "list_desk_form_title": "Назва колоди",
+  "list_desk_form_description": "Опис колод",
+  "list_desk_form_submit": "Зберегти",
+  "list_desk_form_submiting": "Збереження",
+
+  "list_desk_form_question": "Питання",
+  "list_desk_form_answer": "Відповідь",
+  "list_desk_form_hint": "Підсказка",
+
+  "settings_lang_label": "Мова",
+  "settings_lang_en": "EN",
+  "settings_lang_uk": "UK",
+  "settings_theme_label": "Тема",
+  "settings_theme_light": "Світла",
+  "settings_theme_dark": "Темна"
+}

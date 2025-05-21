@@ -3,7 +3,6 @@ import { isTokenValid } from "../utility/index.js";
 
 export const authenticateUser = (req, res, next) => {
   const auth = req.headers.authorization;
-
   if (!auth?.startsWith('Bearer ')) {
     throw new customError.UnauthenticatedError('Unauthorized');
   }

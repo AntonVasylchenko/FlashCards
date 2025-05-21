@@ -58,9 +58,9 @@ async function createNewCard(userId, card) {
     if (!card.answer) {
         throw new customError.BadRequestError("Missing required field: 'answer'. Please provide an answer for the desk.");
     }
-    const newDesk = await createCard(userId, card);
+    const newCard = await createCard(userId, card);
     return buildResponse({
-        data: newDesk,
+        data: newCard,
         success: true,
         error: null,
         message: "The card has been created successfully"

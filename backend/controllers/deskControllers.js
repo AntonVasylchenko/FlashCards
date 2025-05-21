@@ -25,7 +25,7 @@ async function deleteDesk(req, res) {
 }
 async function updateDesk(req, res) {
     const { id } = req.params;
-    const response = await updateExistingDesk(id,req.body);
+    const response = await updateExistingDesk(id, req.body);
     res.status(StatusCodes.OK).json(response);
 }
 

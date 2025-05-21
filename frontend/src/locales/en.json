@@ -1,0 +1,39 @@
+{
+  "create": "Create desk",
+  "desk": "Desk",
+  "view": "My desks",
+  "about": "Author",
+  "settings": "Settings",
+  "404": "404",
+
+  "home_description": "Flashcards for language learning in Telegram",
+
+  "create_desk_name": "Deck Name",
+  "create_desk_describe": "Deck Description",
+  "create_desk_create": "Create",
+  "create_desk_creating": "Creating",
+  "create_desk_view": "View",
+  "create_desk_success": "The desk has been created successfully",
+  "create_desk_error": "Please provide a title for the desk",
+
+  "list_desk_empty": "No decks available",
+  "list_desk_create": "Create New Deck",
+  "list_desk_edit": "Edit",
+  "list_desk_remove": "Remove",
+  "list_desk_add_word": "Add word",
+  "list_desk_form_title": "Title",
+  "list_desk_form_description": "Description",
+  "list_desk_form_submit": "Save",
+  "list_desk_form_submiting": "Saving",
+
+  "list_desk_form_question": "Question",
+  "list_desk_form_answer": "Answer",
+  "list_desk_form_hint": "Hint",
+
+  "settings_lang_label": "Language",
+  "settings_lang_en": "EN",
+  "settings_lang_uk": "UK",
+  "settings_theme_label": "Theme",
+  "settings_theme_light": "Light",
+  "settings_theme_dark": "Dark"
+}

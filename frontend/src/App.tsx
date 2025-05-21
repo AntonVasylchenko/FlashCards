@@ -1,143 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import type { TelegramWebApp, TelegramUser, ThemeParams } from "../types/index.ts";
-import { GlobalStyles } from './components/index.ts';
+import React from "react";
+import useTelegram from './hook/useTelegram.ts';
+import { Loader } from "./components/index.ts"
+import { Outlet } from "react-router";
+import { LocalesContext } from "./main.tsx";
+import useStore from "./store/index.ts";
 
 
-declare global {
-  interface Window {
-    Telegram: {
-      WebApp: TelegramWebApp;
-    };
-  }
-}
 
-async function getDesks() {
-  const token = sessionStorage.getItem('token');
-  try {
-    const response = await fetch(`/api/v1/desk`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const data = await response.json();
-    return data
-  } catch (error) {
-    console.log(error)
-  }
-}
-async function handleOneDesk(id: string) {
-  const token = sessionStorage.getItem('token');
-  try {
-    const response = await fetch(`/api/v1/desk/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const data = await response.json();
-    console.log(data);
-    return data
-  } catch (error) {
-    console.log(error)
-  }
-}
 
-async function checkUser(telegramUser: TelegramUser) {
-  try {
-    const response = await fetch("/api/v1/user/check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...telegramUser })
-    });
-    const data = await response.json();
-    return data
-
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<TelegramUser | null>(null);
-  const [userId, setUserId] = useState<string | null>(null)
-  const [themeParams, setThemeParams] = useState<ThemeParams | null>(null);
-  const [desks, setDesks] = useState<{}[]>([]);
+  const [ready, setReady] = React.useState<boolean>(false)
 
+  const { user, storage, theme } = useTelegram();
+  const locales = React.useContext(LocalesContext);
+  const { theme: themeStore } = useStore();
 
-  const handleGetDesks = async () => {
-    const response = await getDesks();
-    setDesks(response.data);
-  }
+  React.useEffect(() => {
+    if (user && storage) {
+      let langLoaded = false;
+      let themeLoaded = false;
 
+      storage.getItem("lang", (error, value) => {
+        if (error) console.error(error);
+        if (value) locales?.changeLanguage(value);
 
-  useEffect(() => {
-    if (!window.Telegram || !window.Telegram.WebApp) return;
+        langLoaded = true;
+        if (langLoaded && themeLoaded) setReady(true);
+      })
+      
+      storage.getItem("theme", (error, value) => {
+        if (error) {
+          console.error(error);
+          themeStore.handle(theme);
+          return;
+        }
+        const currentTheme = value === "light" || value === "dark" ? value : theme;
+        themeStore.handle(currentTheme);
 
-    const telegram = window.Telegram.WebApp;
-
-    telegram.expand();
-
-    const userData = telegram.initDataUnsafe?.user;
-    const params = telegram.themeParams;
-
-    if (userData) {
-      setUser(userData);
-      (async () => {
-        const response = await checkUser(userData);
-        sessionStorage.setItem('token', response.token);
-        const userId = response.data.id;
-        setUserId(userId)
-      })();
+        themeLoaded = true;
+        if (langLoaded && themeLoaded) setReady(true);
+      });
     }
-
-    if (params) {
-      setThemeParams((prev) => ({ ...prev, ...params }));
-    }
-
-    const onThemeChange = () => {
-      const updatedThemeParams = telegram.themeParams;
-      if (updatedThemeParams) {
-        setThemeParams((prev) => ({ ...prev, ...updatedThemeParams }));
-      }
-    };
-
-    telegram.onEvent("themeChanged", onThemeChange);
-    telegram.ready();
-
-    return () => {
-      telegram.offEvent("themeChanged", onThemeChange);
-    };
-  }, []);
+  }, [user, storage])
 
   return (
     <>
-      <GlobalStyles styles={themeParams} />
-      <div
-        style={{
-          padding: 20,
-          backgroundColor: themeParams?.bg_color || "#fff",
-          color: themeParams?.text_color || "#000"
-        }}
-      >
-        <h2>
-          {user ? `Welcome ${user.first_name} ${user.last_name ?? ''}` : "Welcome!"}
-        </h2>
-        <div>Background color: {themeParams?.bg_color || "default"}</div>
-        <button onClick={handleGetDesks}>Click</button>
-
-        <div>userId:{userId}</div>
-
-
-        {desks.map(desk => {
-
-          return (
-            <div key={desk.id}>
-              <p>{desk.title}</p>
-              <p>{desk.description}</p>
-              <button onClick={() => handleOneDesk(desk.id)} >click</button>
-            </div>
-          )
-        })}
-      </div>
+      {
+        ready === false
+          ? <Loader />
+          : <div className={themeStore.value}> <Outlet /></div>
+      }
     </>
-  );
+  )
 };
 
 export default App;

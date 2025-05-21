@@ -10,7 +10,7 @@ const telegramFields = ["first_name", "last_name", "username", "language_code"];
 
 
 async function syncUserData(body) {
-    const telegramUser = body;
+    const telegramUser = body;    
     let responseData = {};
 
     const candidate = await check(telegramUser.id);

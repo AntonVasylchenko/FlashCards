@@ -5,6 +5,9 @@ async function getAll(userId) {
         where: {
             userId,
         },
+        orderBy: {
+            createdAt: 'desc'
+        },
     });
 }
 
