@@ -1,7 +1,7 @@
 import type { ApiEndpoints, ButtonType } from "../../types/index.ts";
 
 export const apiEndPoints = (): ApiEndpoints => {
-  const mainPath = "https://816f-193-194-127-199.ngrok-free.app/api/v1";
+  const mainPath = "https://flashcards-isvz.onrender.com/api/v1";
 
   return {
     user: {
