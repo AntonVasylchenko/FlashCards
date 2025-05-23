@@ -11,9 +11,17 @@ import { notFoundMiddleware, errorHandlerMiddleware } from "./middleware/index.j
 import appConfig from "./src/config.js";
 import launchTelegramBot from "./src/telegram.js";
 import { userRoutes, deskRoutes, cardRoutes } from "./routes/index.js";
+import rateLimiter from "express-rate-limit";
 
 const app = express();
 const PORT = appConfig.port
+
+app.use(
+  rateLimiter({
+    windowMs: 1 * 60 * 1000,
+    max: 500,
+  })
+);
 
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(express.urlencoded({ extended: false }));
