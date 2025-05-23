@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import { LocalesContext } from "../main.tsx"
 
 
+
 type PageHeaderProps = {
     title: string
 }
@@ -13,6 +14,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title }) => {
     const handleBack = () => {
         navigate("/");
     };
+
+    
     return (
         <div className="flex items-center justify-between mb-6">
             <button onClick={handleBack} className="text-2xl text-blue-500 dark:text-blue-400">←</button>

@@ -3,7 +3,7 @@ import { cardModel } from "../models/index.js"
 import { buildResponse } from "../utility/index.js";
 const { getCards, getCard, createCard, updateCard, deleteCard } = cardModel;
 
-async function getAllCards(deskId) {
+async function getAllCards(deskId) {    
     if (!deskId) {
         throw new customError.BadRequestError(`Missing required parameter: 'deskId'. Please provide a valid desk ID to retrieve the desk.`);
     }

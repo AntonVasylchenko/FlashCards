@@ -6,10 +6,10 @@ export type DeskEndpoints = {
   delete: (deskId: string) => string;
 };
 
-export type ButtonType = "blue" | "red" | "green";
+export type ButtonType = "blue" | "red" | "green" | "primary" | "secondary";
 
 export type CardEndpoints = {
-  all: () => string;
+  all: (deskId: string) => string;
   create: () => string;
   one: (cardId: string) => string;
   update: (cardId: string) => string;

@@ -4,7 +4,7 @@ import { cardService } from "../services/index.js";
 const { getAllCards, createNewCard, getOneCard, deleteOneCard, updateOneCard } = cardService;
 
 async function getCards(req, res) {
-    const { deskId } = req.body;
+    const { deskId } = req.query;    
     const response = await getAllCards(deskId);
     res.status(StatusCodes.OK).json(response);
 }
