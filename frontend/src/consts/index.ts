@@ -3,6 +3,8 @@ import type { ApiEndpoints, ButtonType } from "../../types/index.ts";
 export const apiEndPoints = (): ApiEndpoints => {
   const mainPath = "https://flashcards-isvz.onrender.com/api/v1";
 
+  console.log("API URL:", mainPath);
+
   return {
     user: {
       check: (): string => `${mainPath}/user/check`,
