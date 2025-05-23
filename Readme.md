@@ -43,15 +43,6 @@ npm install
 npm run dev
 ```
 
-## Telegram Bot
-
-To start the Telegram bot, run:
-
-```sh
-cd backend
-npm run telegram
-```
-
 ## License
 
 MIT
